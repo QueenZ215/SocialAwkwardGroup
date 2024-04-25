@@ -65,3 +65,12 @@ humanities = {
 }
 
 pathways = [amtec, arts, business, stem, sjw, transitional, explore, health, humanities]
+
+#User dic
+
+user = {
+	"name": ""
+	"gender":""
+	"pronouns":""
+	"fantasyRace":""
+}
