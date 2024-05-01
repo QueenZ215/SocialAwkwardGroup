@@ -74,3 +74,9 @@ user = {
 	"pronouns":"",
 	"fantasyRace":""
 }
+
+
+for i in pathways:
+    print(i["name"])
+    print(i["Programs"])
+        
