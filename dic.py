@@ -1,3 +1,4 @@
+import re
 
 #Pathway dictonary's 
 # to call a key inside a dictonary dictonary["keyName"] exp print("Name:",arts["name"]) Name: Arts 
@@ -67,20 +68,55 @@ humanities = {
 pathways = [amtec, arts, business, stem, sjw, transitional, explore, health, humanities]
 
 #User dic
-
 user = {
 	"name": "",
 	"gender":"",
-	"pronouns":"",
+	"subjectPronoun":"they",
+	"objectPronoun":"them",
+	"possessivePronoun":"theirs",
 	"fantasyRace":""
 }
 
+#definitions to run the scipt
+#startUp displays welcome message in the furture might contain start up for cursers modual
+def startUp():
+   print("Welcome to the program")
+   return()
+#adds user input to user dictonary key
+def getUserName():
+  user["name"] = input("Enter your name: ")
+  return()
+def getUserGender():
+  user["gender"] = input("What is your gender(this is an optional release of information): ")
+  return()
+def getUserPronouns():
+  pronounInput = input("what are your pronouns? ")
+  pronouns = [pronoun.strip() for pronoun in re.split(r'[, /]', pronounInput)]
+  # Assign pronouns to respective keys
+  if len(pronouns) >= 1:
+    user["subjectPronoun"] = pronouns[0]
+  if len(pronouns) >= 2:
+    user["objectPronoun"] = pronouns[1]
+  if len(pronouns) >= 3:
+    user["possessivePronoun"] = pronouns[2]
+  return()
+# This is the entry point if this code is run as a script
+if __name__ == "__main__":
 
-for i in pathways:
-    try:
-        print(i["name"])
-        print(i["Programs"])
-    except KeyError:
-        print("Missing key in dictionary:", i)
-    except TypeError:
-        print("Not a dictionary:", i)
+#testing database keys
+# for i in pathways:
+#    try:
+#        print(i["name"])
+#        print(i["Programs"])
+#    except KeyError:
+#        print("Missing key in dictionary:", i)
+#    except TypeError:
+#        print("Not a dictionary:", i)
+ startUp()
+ getUserName()
+ getUserGender()
+ getUserPronouns()
+ print (user["name"]+" "+user["gender"]+" "+user["subjectPronoun"]+"/"+user["objectPronoun"]+"/"+user["possessivePronoun"])
+
+
+    		
