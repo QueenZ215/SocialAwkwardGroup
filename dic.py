@@ -100,6 +100,36 @@ def getUserPronouns():
   if len(pronouns) >= 3:
     user["possessivePronoun"] = pronouns[2]
   return()
+
+def mainMenu():
+	print(f"Welcome to the EVCC's Pathway chooser "+user["name"])
+	while True:
+	  choice=input("Press 1 to start the pathway Quiz or 2 to get information on all of the pathways: ")
+	  if choice=="1":
+	    startQuiz()
+	    break
+	  elif choice=="2":
+ 	    displayInfo()
+ 	    break
+	print("invalid input!")
+	return()
+
+def startQuiz():
+	return()
+
+def displayInfo():
+	fixedWidth = 50 
+	
+	for pathway in pathways:
+	  c=0
+	  print('\n')  
+	  if c <= 2:
+	  	print(f"{pathway['name']:{fixedWidth}}")
+	  	c + 1	    
+	return()
+
+
+
 # This is the entry point if this code is run as a script
 if __name__ == "__main__":
 
@@ -116,7 +146,8 @@ if __name__ == "__main__":
  getUserName()
  getUserGender()
  getUserPronouns()
- print (user["name"]+" "+user["gender"]+" "+user["subjectPronoun"]+"/"+user["objectPronoun"]+"/"+user["possessivePronoun"])
+ mainMenu()
+ #print (user["name"]+" "+user["gender"]+" "+user["subjectPronoun"]+"/"+user["objectPronoun"]+"/"+user["possessivePronoun"])
 
 
     		
