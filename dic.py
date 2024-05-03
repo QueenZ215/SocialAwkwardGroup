@@ -115,22 +115,13 @@ def mainMenu():
             print("Invalid input!")
     return()
 
+
 def startQuiz():
 	return()
 
 def displayInfo():
-    fixedWidth = 50
-    c = 0
-    i = 1 
-    for pathway in pathways:
-        if c < 2:
-            print(i+"."f"{pathway['name']:{fixedWidth}}", end="")
-            c += 1
-        else:
-            print(i+"."f"{pathway['name']:{fixedWidth}}", end="")
-            c = 0
-            print("") 
-    return()
+
+
 
 
 # This is the entry point if this code is run as a script
@@ -148,7 +139,6 @@ if __name__ == "__main__":
  startUp()
  getUserName()
  getUserGender()
- getUserPronouns()
  mainMenu()
  #print (user["name"]+" "+user["gender"]+" "+user["subjectPronoun"]+"/"+user["objectPronoun"]+"/"+user["possessivePronoun"])
 
