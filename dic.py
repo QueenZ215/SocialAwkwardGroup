@@ -102,25 +102,12 @@ def getUserPronouns():
   return()
 
 def mainMenu():
-    print("Welcome to the EVCC's Pathway chooser " + user["name"] + "!")
-    while True:
-        choice = input("Press 1 to start the pathway Quiz or 2 to get information on all of the pathways: ")
-        if choice == "1":
-            startQuiz()
-            break
-        elif choice == "2":
-            displayInfo()
-            break
-        else:
-            print("Invalid input!")
-    return()
 
 
 def startQuiz():
 	return()
 
 def displayInfo():
-
 
 
 
@@ -139,6 +126,7 @@ if __name__ == "__main__":
  startUp()
  getUserName()
  getUserGender()
+ getUserPronouns()
  mainMenu()
  #print (user["name"]+" "+user["gender"]+" "+user["subjectPronoun"]+"/"+user["objectPronoun"]+"/"+user["possessivePronoun"])
 
