@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import re
 
 #Pathway dictonary's 
@@ -5,64 +7,55 @@ import re
 amtec = {
 	"name": "Advanced Manufacturing and Aerospace",
 	"info": "",
-	"choice": False,
-	"programs":"Advanced Avionics, Aviation Maintenance Technology, Composites, Engineering Technology ,Mechatronics / Maintenance Technician Training ,Precision Machining, Welding & Fabrication"
+	"programs":["Advanced Avionics", "Aviation Maintenance Technology", "Composites", "Engineering Technology", "Mechatronics / Maintenance Technician Training", "Precision Machining", "Welding & Fabrication"]
 }
 
 arts = {
 	"name":"Arts",
 	"info":"",
-	"choice": False,
-	"programs":"Music, Photography, Studio Arts (Ceramics, Drawing, Painting, Printmaking), Graphic Design and Web Design"
+	"programs":["Music", "Photography", "Studio Arts (Ceramics, Drawing, Painting, Printmaking)", "Graphic Design and Web Design"]
 }
 
 business = {
 	"name":"Business",
 	"info":"",
-	"choice": False,
-	"programs":"Accounting & Bookkeeping, BAS in Accounting at EvCC, Business(Business Administration, Management, Marketing), Cosmetology, Economics, Healthcare Management(Business Technology, Healthcare Risk Management, Medical Front Office, Medical Office Administration, Medical Billing and Coding), Information Technology"
+	"programs":["Accounting & Bookkeeping", "BAS in Accounting at EvCC", "Business (Business Administration, Management, Marketing)", "Cosmetology", "Economics", "Healthcare Management (Business Technology, Healthcare Risk Management, Medical Front Office, Medical Office Administration, Medical Billing and Coding)", "Information Technology"]
 }
 
 stem = {
 	"name":"Science, Technology, Engineering, and Math",
 	"info":"",
-	"choice": False,
-	"programs":"Computer Science, Engineering, Math, Science(Astronomy/Physics, Atmospheric Science, Biology, Botany, Chemistry, Environmental Science, Geology, Oceanography)"
+	"programs":["Computer Science", "Engineering", "Math", "Science", "Astronomy/Physics", "Atmospheric Science", "Biology", "Botany", "Chemistry", "Environmental Science", "Geology", "Oceanography"]
 }
 
 sjw = {
 	"name":"Social Science, Education, and Public Safety",
 	"info":"",
-	"choice": False,
-	"programs":"Anthropology, Criminal Justice, Diversity, Equity, and Social Justice, Early Childhood Education, Education, EMT, Fire Science, Geography, Human Services, Physical Education, Political Science, Psychology, Sociology"
+	"programs":["Anthropology", "Criminal Justice", "Diversity, Equity, and Social Justice", "Early Childhood Education", "Education", "EMT", "Fire Science", "Geography", "Human Services", "Physical Education", "Political Science", "Psychology", "Sociology"]
 }
 
 transitional = {
 	"name":"Transitional Studies",
 	"info":"",
-	"choice": False,
 	"programs":" "
 }
 
 explore = {
 	"name":"Exploratory",
 	"info":"",
-	"choice": False,
-	"programs":"English Classes (ELA/ESL), Youth Re-Engagement Program (U3), GED, GED in Español, High School Completion (HSC), Integrated Basic Education and Skills Training (I-BEST), College Success 101, Study Online"
+	"programs":["English Classes (ELA/ESL)", "Youth Re-Engagement Program (U3)", "GED", "GED in Español", "High School Completion (HSC)", "Integrated Basic Education and Skills Training (I-BEST)", "College Success 101", "Study Online"]
 }
 
 health = {
 	"name":"Healthcare",
 	"info":"",
-	"choice": False,
-	"programs":"Medical Assisting, Medical Spanish Interpreter, Nursing, Nutrition, Phlebotomy, Pre-Dental Hygiene, Pre-Medicine, Pre-Nursing, Pre-Occupational Therapy, Pre-Physical Therapy"
+	"programs":["Medical Assisting", "Medical Spanish Interpreter", "Nursing", "Nutrition", "Phlebotomy", "Pre-Dental Hygiene", "Pre-Medicine", "Pre-Nursing", "Pre-Occupational Therapy", "Pre-Physical Therapy"]
 }
 
 humanities = {
 	"name":"Humanities",
 	"info":"",
-	"choice": False,
-	"programs":"Communication Studies, Creative Writing, Drama, English and Literature, Global Studies, History, Humanities, Journalism, Philosophy, World Languages"
+	"programs":["Communication Studies", "Creative Writing", "Drama, English and Literature", "Global Studies", "History", "Humanities", "Journalism", "Philosophy", "World Languages"]
 }
 
 pathways = [amtec, arts, business, stem, sjw, transitional, explore, health, humanities]
@@ -74,7 +67,9 @@ user = {
 	"subjectPronoun":"they",
 	"objectPronoun":"them",
 	"possessivePronoun":"theirs",
-	"fantasyRace":""
+	"fantasyRace":"",
+	"choice": "",
+	"programChoice":""
 }
 
 #definitions to run the scipt
@@ -102,17 +97,109 @@ def getUserPronouns():
   return()
 
 def mainMenu():
-
+	while True:
+	  choice=input("Press 1 to start the pathway Quiz or 2 to get information on all of the pathways: ")
+	  if choice=="1":
+	    startQuiz()
+	    break
+	  elif choice=="2":
+ 	    displayPathways()
+ 	    break
+	  else:
+	  	print("invalid input!")
+	return(choice)
 
 def startQuiz():
 	return()
 
 def displayInfo():
 
+def displayPathways():
+    fixedWidth = 50
+    c = 0
+    for i,pathway in enumerate(pathways):
+        if c < 2:
+            print(f"{i+1}:{pathway['name']:{fixedWidth}}", end="")
+            c = c + 1
+            i = i + 1
+        else:
+            print(f"{i+1}:{pathway['name']}")
+            c = 0
+            i = i + 1
+            print("") 
+    print("")        
+    return()
+
+def displayPathwayInfo(num):
+	num -= 1
+	print(f"\n{pathways[num]['name']}\n{pathways[num]['info']}")
+	return()
+
+def displayPrograms():
+    fixedWidth = 50
+    c = 0
+    for i,program in enumerate({pathways[user["choice"]]["programs"]}):
+        if c < 2:
+            print(f"{i+1}:{program}:{fixedWidth}", end="")
+            c = c + 1
+            i = i + 1
+        else:
+            print(f"{i+1}:{program}")
+            c = 0
+            i = i + 1
+            print("") 
+    print("")        
+    return()
+
+def pathwayChooser():
+ 	while True:
+ 		try:
+ 		  display = int(input("Enter the number to the left of the pathway to get more information: "))
+ 		  break
+ 		except ValueError:
+ 			print("Please enter a valid choice")
+ 	return(display)		
+
+def programChooser():
+ 	while True:
+ 		try:
+ 		  display = int(input("Enter the number to the left of the program to get more information: "))
+ 		  break
+ 		except ValueError:
+ 			print("Please enter a valid choice")
+ 	return(display)		
+
 
 
 # This is the entry point if this code is run as a script
 if __name__ == "__main__":
+
+
+ startUp()
+ getUserName()
+ getUserGender()
+ getUserPronouns()
+ print(f"Welcome to the EVCC's Pathway chooser "+user["name"])
+ while user["choice"] != True:
+ 	choice=mainMenu()
+ 	if choice == "2":
+ 		display=pathwayChooser()
+
+ 	displayPathwayInfo(display)
+ 	while True:
+ 		confirm=input("Would you like to pick this pathway and explore the programs in it? (Y/n)")
+ 		confirm=confirm.upper()
+ 		if confirm =="Y":
+ 			user["choice"] = pathways[display]
+ 			displayPrograms()
+ 			break
+ 		elif confirm =="N":
+ 			break
+ 		else:
+ 			print("please enter y for yes n for no")
+ while user["programChoice"] != True:
+ 	us=programChooser()
+
 
 #testing database keys
 # for i in pathways:
@@ -123,12 +210,7 @@ if __name__ == "__main__":
 #        print("Missing key in dictionary:", i)
 #    except TypeError:
 #        print("Not a dictionary:", i)
- startUp()
- getUserName()
- getUserGender()
- getUserPronouns()
- mainMenu()
- #print (user["name"]+" "+user["gender"]+" "+user["subjectPronoun"]+"/"+user["objectPronoun"]+"/"+user["possessivePronoun"])
+#print (user["name"]+" "+user["gender"]+" "+user["subjectPronoun"]+"/"+user["objectPronoun"]+"/"+user["possessivePronoun"])
 
 
     		
