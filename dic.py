@@ -178,7 +178,11 @@ user = {
 	"possessivePronoun":"theirs",
 	"fantasyRace":"",
 	"choice": "",
-	"programChoice":""
+	"choiceB":False,
+	"pathwaylist": "",
+	"programChoice":"",
+	"programList":"",
+	"programB":False
 }
 
 #definitions to run the scipt
@@ -211,7 +215,7 @@ def getUserRace():
   
   print(f"{user['name']}, these are the mighty races of the land: ")
   while True:
-  	fixedWidth = 50
+  	fixedWidth = 10
   	c = 0
   	for i,race in enumerate(fantasyRace):
   		if c < 2:
@@ -222,12 +226,23 @@ def getUserRace():
   			print(f"{i+1}:{race['name']}")
   			c = 0
   			i = i + 1
-  			print("") 
-  		print("")
-  	num=int(input("Enter the number left of the race you see more information:"))
+  	print("")
+  	num=0
+  	while True:
+  		try:
+  			num=int(input(f"\nEnter the number left of the race you see more information:"))
+  			print(num)
+  			if num-1 <= len(fantasyRace):
+  				print(num)
+  				break
+  			print("skip if please enter a valid choice")	
+  			print(num)
+  		except ValueError:
+  			print("error Please enter a valid choice")
+  			print(num)
 
   	print(f"{fantasyRace[num-1]['name']}	{fantasyRace[num-1]['pathway']}")
-  	print(f"	{fantasyRace[num-1]['info']}")
+  	print(f"{fantasyRace[num-1]['info']}\n")
   	choice=input(f"{user['name']}, would you like to keep this race?")
   	choice=choice.upper()
   	if choice == "YES":
@@ -269,8 +284,7 @@ def displayPathways():
         else:
             print(f"{i+1}:{pathway['name']}")
             c = 0
-            i = i + 1
-            print("") 
+            i = i + 1 
     print("")        
     return()
 
@@ -280,18 +294,18 @@ def displayPathwayInfo(num):
 	return()
 
 def displayPrograms():
-    fixedWidth = 50
+    fixedWidth = 10
     c = 0
-    for i,program in enumerate({pathways[{user["choice"]}]["programs"]}): #BUG need to be able to call the correct programs of the correct pathway
+    
+    for i,program in enumerate(user['pathwaylist']):
         if c < 2:
-            print(f"{i+1}:{program}:{fixedWidth}", end="")
+            print(f"{i+1}:{program['name']:{fixedWidth}}", end="")
             c = c + 1
             i = i + 1
         else:
-            print(f"{i+1}:{program}")
+            print(f"{i+1}:{program['name']}")
             c = 0
-            i = i + 1
-            print("") 
+            i = i + 1 
     print("")        
     return()
 
@@ -299,19 +313,28 @@ def pathwayChooser():
  	while True:
  		try:
  		  display = int(input("Enter the number to the left of the pathway to get more information: "))
- 		  break
+ 		  if display-1 <= len(pathways):
+ 		  	break
+ 		  print("Please enter a valid choice")
  		except ValueError:
  			print("Please enter a valid choice")
+ 	print(display-1)
  	return(display)		
 
 def programChooser():
  	while True:
  		try:
  		  display = int(input("Enter the number to the left of the program to get more information: "))
- 		  break
+ 		  if display-1 <= len(user['pathwaylist']):
+ 		  	break
  		except ValueError:
  			print("Please enter a valid choice")
- 	return(display)		
+ 	return(display)
+
+def programInfo(num):
+	num -= 1
+	print(f"\n{user['pathwaylist'][num]['name']}\n{user['pathwaylist'][num]['info']}")
+	return()		
 
 
 # This is the entry point if this code is run as a script
@@ -323,32 +346,60 @@ if __name__ == "__main__":
   	getUserPronouns()
   	getUserRace()
   	print(f"Welcome to the EVCC's Pathway chooser "+user['name'])
-  	while user["choice"] != True:
+  	while user["choiceB"] != True:
   		choice=mainMenu()
   		if choice == "2":
-  			display=pathwayChooser()
-  			displayPathwayInfo(display)
+  			pathway=pathwayChooser()
+  			displayPathwayInfo(pathway)
   			while True:
   				confirm=input("Would you like to pick this pathway and explore the programs in it? (Y/n)")
   				confirm=confirm.upper()
   				if confirm =="Y":
-  					user["choice"] = pathways[display]
+  					user["choice"] = pathways[pathway-1]['name']
+  					user["choiceB"] = True
+  					user['pathwaylist'] = pathways[pathway-1]['programs']
   					break
   				elif confirm =="N":
   					break
   				else:
   					print("please enter y for yes n for no")
-  			while user["programChoice"] != True:
+  			while user["programB"] != True:
   				displayPrograms()
   				choice=programChooser()
-  				user['programChoice'] = {pathways[user["choice"]][choice]}
-  				programInfo()
-  		reset=print(f"Hey {user['name']}! thanks for useing EVCC's Pathway program today you explored the {user['programChoice']} program in the {user[choice]} pathway . if you would like try again type reset or anything eles to end")
-  		reset=reset.upper
+  				
+  				programInfo(choice)
+  				confirm=input("Would you like to pick this program (Y/n)")
+  				confirm=confirm.upper()
+  				if confirm =="Y":
+  					user['programChoice'] = user["pathwaylist"][choice-1]['name']
+  					user['programList'] = user["pathwaylist"][choice-1]['class']
+  					user['programB'] = True
+  				elif confirm =="N":
+  					`
+  					goBack=input("would you like to chose a new Pathway, Program, or just quit?(Pathway, Program, Quit)")
+  					goBack=goback.upper
+  					if goBack == "PATHWAY":
+  						user["choiceB"]= False
+  						break
+  					elif goBack == "PROGRAM":
+  						user['programB'] = False
+  					elif goBack == "QUIT":
+  						end(0)
+  					else:
+  						print("please enter Pathway, Program, Quit")
+  				else:
+  					print("please enter y for yes n for no")
+  		if user["programB"] == True :
+  			print(f"here is a sugested list of First quarter classes based on you choices.\n{user['programList']}")
+  		reset=input(f"Hey {user['name']}! thanks for useing EVCC's Pathway program today you explored the {user['programChoice']} program in the {user['choice']} pathway . if you would like try again type reset or anything eles to end: ")
+  		reset=reset.upper()
   		if reset == "RESET":
-  			print("")
+  			user["choiceB"] =  False
+  			user['programB'] = False
   		else:
   			break
+  	if user["programB"] and user["choiceB"] == True :
+  		break
 
 
 
